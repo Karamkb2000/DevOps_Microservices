@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-12" style="max-width: 400px;">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h2 class="card-title h4 mb-4 text-center">Create Account</h2>
+
+                {% if error %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ error }}
+                    </div>
+                {% endif %}
+
+                <form method="POST" action="/register">
+                    <div class="mb-3">
+                        <label for="full_name" class="form-label">Full name</label>
+                        <input type="text" class="form-control"
+                               id="full_name" name="full_name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control"
+                               id="email" name="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control"
+                               id="password" name="password" minlength="8" required>
+                        <div class="form-text">At least 8 characters.</div>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">
+                        Register
+                    </button>
+                </form>
+
+                <p class="text-center text-muted mt-3 mb-0">
+                    Already have an account?
+                    <a href="/login">Login here</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

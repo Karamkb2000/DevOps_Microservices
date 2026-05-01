@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero text-center bg-light rounded shadow-sm mb-5">
+    <div class="container">
+        <h1 class="display-3 fw-bold">Product Catalog</h1>
+        <p class="lead text-muted col-lg-8 mx-auto">
+            A production-grade microservices project demonstrating CI/CD, container
+            orchestration, observability, and cloud infrastructure-as-code.
+        </p>
+        <a href="/products" class="btn btn-primary btn-lg mt-3">View Products</a>
+    </div>
+</section>
+
+<section class="row g-4 mb-5">
+    <div class="col-md-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h3 class="card-title h5">CI/CD with Jenkins</h3>
+                <p class="card-text text-muted">
+                    Every commit runs unit tests, builds Docker images, pushes them to
+                    Amazon ECR, and rolls out a zero-downtime Kubernetes deployment.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h3 class="card-title h5">Hosted on Kubernetes</h3>
+                <p class="card-text text-muted">
+                    Three independent FastAPI services run on a self-managed
+                    Kubernetes cluster behind an AWS Application Load Balancer.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h3 class="card-title h5">Monitored with Prometheus</h3>
+                <p class="card-text text-muted">
+                    Each service exposes a /metrics endpoint scraped by Prometheus and
+                    visualized in Grafana dashboards out of the box.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

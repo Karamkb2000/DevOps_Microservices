@@ -1,0 +1,60 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: capstone-postgres
+    environment:
+      POSTGRES_DB: capstone_db
+      POSTGRES_USER: capstone_admin
+      POSTGRES_PASSWORD: devpassword
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U capstone_admin -d capstone_db"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+
+  api-service:
+    build: ./services/api-service
+    container_name: capstone-api
+    environment:
+      DATABASE_URL: postgresql://capstone_admin:devpassword@postgres:5432/capstone_db
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: on-failure
+
+  auth-service:
+    build: ./services/auth-service
+    container_name: capstone-auth
+    environment:
+      DATABASE_URL: postgresql://capstone_admin:devpassword@postgres:5432/capstone_db
+      JWT_SECRET_KEY: dev-secret-key-change-in-prod
+    ports:
+      - "8001:8001"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: on-failure
+
+  frontend-service:
+    build: ./services/frontend-service
+    container_name: capstone-frontend
+    environment:
+      API_SERVICE_URL: http://api-service:8000
+      AUTH_SERVICE_URL: http://auth-service:8001
+    ports:
+      - "8080:8080"
+    depends_on:
+      - api-service
+      - auth-service
+    restart: on-failure
+
+volumes:
+  postgres_data:
+    driver: local
